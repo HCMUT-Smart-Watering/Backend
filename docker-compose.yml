@@ -1,0 +1,38 @@
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - ${PORT:-3001}:3001
+    container_name: iot-server
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:17.4
+    restart: always
+    ports:
+    - ${POSTGRES_PORT:-5432}:5432
+    container_name: iot-db
+    user: postgres
+    environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready", "-U", "postgres"]
+        interval: 1s
+        timeout: 5s
+        retries: 10
+    volumes:
+        - data-iot:/var/lib/postgresql/data 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+        - ${ADMINER_PORT:-8080}:8080
+volumes:
+  data-iot:
+
