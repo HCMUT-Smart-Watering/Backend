@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {
   NotificationModule,
   UserModule,
   ScheduleModule,
   StatisticModule,
+  AuthModule,
+  AdafruitModule,
 } from './modules';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from './config/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BullModule } from '@nestjs/bullmq';
-import { AuthModule } from './modules/auth/auth.module';
-import { DbModule } from './modules/db/db.module';
-import { AdafruitModule } from './modules/adafruit/adafruit.module';
-import DatabaseConfig from './config/postgre/database.config';
+import DatabaseConfig from './config/database.config';
+import {
+  CustomExceptionFilter,
+  DatabaseExceptionFilter,
+} from './common/filters';
 
 @Module({
   imports: [
@@ -40,10 +41,17 @@ import DatabaseConfig from './config/postgre/database.config';
     ScheduleModule,
     StatisticModule,
     AuthModule,
-    DbModule,
     AdafruitModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: 'CUSTOM_ERR_FILTER',
+      useClass: CustomExceptionFilter,
+    },
+    {
+      provide: 'DB_ERR_FILTER',
+      useClass: DatabaseExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
