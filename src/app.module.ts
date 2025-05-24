@@ -16,6 +16,7 @@ import {
   CustomExceptionFilter,
   DatabaseExceptionFilter,
 } from './common/filters';
+import { SystemModule } from './modules/system/system.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import {
     StatisticModule,
     AuthModule,
     AdafruitModule,
+    SystemModule,
   ],
   providers: [
     {

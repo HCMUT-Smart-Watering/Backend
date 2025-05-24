@@ -14,8 +14,9 @@ import { ResponseEntity } from 'src/common/types';
 import { AuthResponseDto } from '../dto';
 import { JwtRefreshAuthGuard } from '../guards/jwt-refresh-auth/jwt-refresh-auth.guard';
 import { Request } from 'express';
-import { Payload } from '../types';
+import { Public } from 'src/common/decorators';
 
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

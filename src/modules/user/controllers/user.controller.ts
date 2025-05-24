@@ -9,7 +9,6 @@ import {
   Query,
   HttpCode,
   HttpStatus,
-  UseGuards,
   Req,
 } from '@nestjs/common';
 import { UserService } from '../providers/user.service';
@@ -23,7 +22,6 @@ import { plainToInstance } from 'class-transformer';
 import { User } from '../entities';
 import { ResponseEntity } from 'src/common/types';
 import { PaginationDto } from 'src/common/dto';
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth/jwt-auth.guard';
 import { Request } from 'express';
 
 @Controller('user')
@@ -67,7 +65,6 @@ export class UserController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
   @HttpCode(HttpStatus.OK)
   async getProfile(@Req() req: Request) {
