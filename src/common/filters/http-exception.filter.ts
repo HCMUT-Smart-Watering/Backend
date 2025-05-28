@@ -30,7 +30,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       status: exception.getStatus() || HttpStatus.INTERNAL_SERVER_ERROR,
       response: {
         success: false,
-        error: exception.message,
+        error: (exception.getResponse() as { message?: string })?.message,
         data: null,
       },
     };
