@@ -22,7 +22,7 @@ export class UserService {
       where: { ...instanceToPlain(user) },
       withDeleted: true,
       skip: pagination.skip,
-      take: pagination.limit || 5,
+      take: pagination.limit,
     });
   }
 
@@ -38,7 +38,7 @@ export class UserService {
     return userData;
   }
 
-  async update(user: User): Promise<User> {
+  async update(id: string, user: User): Promise<User> {
     const userData = await this.userRepository.findOneOrFail({
       where: { id: user.id },
     });

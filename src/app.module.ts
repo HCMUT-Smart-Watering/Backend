@@ -3,7 +3,7 @@ import {
   NotificationModule,
   UserModule,
   ScheduleModule,
-  StatisticModule,
+  SystemModule,
   AuthModule,
   AdafruitModule,
 } from './modules';
@@ -16,7 +16,6 @@ import {
   CustomExceptionFilter,
   DatabaseExceptionFilter,
 } from './common/filters';
-import { SystemModule } from './modules/system/system.module';
 
 @Module({
   imports: [
@@ -40,7 +39,6 @@ import { SystemModule } from './modules/system/system.module';
     UserModule,
     NotificationModule,
     ScheduleModule,
-    StatisticModule,
     AuthModule,
     AdafruitModule,
     SystemModule,

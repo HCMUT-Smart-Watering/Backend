@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   Req,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { UserService } from '../providers/user.service';
 import {
@@ -83,7 +84,7 @@ export class UserController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findOne(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
   ): Promise<ResponseEntity<UserResponseDto>> {
     const user = await this.userService.findOne({ id });
     const data = plainToInstance(UserResponseDto, user, {
@@ -98,12 +99,11 @@ export class UserController {
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() body: UserUpdateDto,
   ): Promise<ResponseEntity<UserResponseDto>> {
     const user = plainToInstance(User, body);
-    user.id = id;
-    const updatedUser = await this.userService.update(user);
+    const updatedUser = await this.userService.update(id, user);
     const data = plainToInstance(UserResponseDto, updatedUser, {
       excludeExtraneousValues: true,
     });
@@ -116,7 +116,7 @@ export class UserController {
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async remove(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
   ): Promise<ResponseEntity<UserResponseDto>> {
     const deletedUser = await this.userService.remove(id);
     const data = plainToInstance(UserResponseDto, deletedUser, {

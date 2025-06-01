@@ -17,6 +17,13 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true,
+      transformOptions: {
+        /* 
+        as of now the class-validator package is unmaintained, this has been broken for a while
+        but i will leave this here to remind myself in future projects
+        */
+        exposeUnsetFields: false,
+      },
     }),
   );
 
