@@ -55,11 +55,9 @@ export class UserController {
       plainToInstance(User, query),
       plainToInstance(PaginationDto, pagination),
     );
-    const data = users.map((user) =>
-      plainToInstance(UserResponseDto, user, {
-        excludeExtraneousValues: true,
-      }),
-    );
+    const data = plainToInstance(UserResponseDto, users, {
+      excludeExtraneousValues: true,
+    });
     return {
       success: true,
       data,
