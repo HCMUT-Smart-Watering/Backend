@@ -40,7 +40,7 @@ export class UserService {
 
   async update(id: string, user: User): Promise<User> {
     const userData = await this.userRepository.findOneOrFail({
-      where: { id: user.id },
+      where: { id },
     });
     const updatedUser = this.userRepository.merge(userData, user);
     return await this.userRepository.save(updatedUser);
