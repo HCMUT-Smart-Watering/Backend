@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -124,6 +125,19 @@ export class SystemController {
     );
     console.log(foundSystem);
     console.log(data);
+    return {
+      success: true,
+      data,
+    };
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.OK)
+  async deleteSystem(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ResponseEntity<SystemResponseDto>> {
+    const deletedSystem = await this.systemService.deleteSystem(id);
+    const data = plainToInstance(SystemResponseDto, deletedSystem);
     return {
       success: true,
       data,

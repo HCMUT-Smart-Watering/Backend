@@ -119,6 +119,12 @@ export class SystemService {
     };
   }
 
+  async deleteSystem(id: string): Promise<System> {
+    const systemData = await this.systemRepository.findOneByOrFail({ id });
+    const deletedSystem = await this.systemRepository.softRemove(systemData);
+    return deletedSystem;
+  }
+
   // updateSetting(name: string, value: string) {}
 
   // getReading(device: string, from: Date, to: Date) {}
