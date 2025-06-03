@@ -48,10 +48,12 @@ export class SystemService {
       name: preset,
     });
     return this.dataSource.transaction(async (manager) => {
+      console.log(user, systemInfo);
       const system = await manager.getRepository(System).save({
-        userId: user,
         ...systemInfo,
+        userId: user,
       });
+      console.log(user);
 
       const inpRepo = manager.getRepository(Device);
       const settingRepo = manager.getRepository(Setting);
