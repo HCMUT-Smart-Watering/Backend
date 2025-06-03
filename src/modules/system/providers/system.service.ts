@@ -91,7 +91,7 @@ export class SystemService {
   async updateSystem(id: string, systemInfo: Partial<System>): Promise<System> {
     const systemData = await this.systemRepository.findOneByOrFail({ id });
     const updatedSystem = this.systemRepository.merge(systemData, systemInfo);
-    return updatedSystem;
+    return await this.systemRepository.save(updatedSystem);
   }
 
   async getSystemsOfUser(id: string): Promise<System[]> {
