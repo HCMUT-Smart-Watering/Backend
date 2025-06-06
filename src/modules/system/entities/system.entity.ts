@@ -18,6 +18,9 @@ export class System {
   @Column()
   name: string;
 
+  @Column()
+  username: string;
+
   @Column({ name: 'api-key' })
   apiKey: string;
 

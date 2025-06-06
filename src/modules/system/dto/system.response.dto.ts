@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
 export class SystemResponseDto {
   @Expose()
@@ -13,6 +13,9 @@ export class SystemResponseDto {
   @Expose()
   active: boolean;
 
-  @Exclude()
+  @Expose()
   apiKey: string;
+
+  @Expose()
+  username: string;
 }
