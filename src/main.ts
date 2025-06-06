@@ -11,7 +11,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const configService = app.get(ConfigService<IEnvVars>);
-  const port = configService.get('port', { infer: true }) as number;
+  const mode = configService.get('env', { infer: true })!;
+  const port = configService.get('port', { infer: true })!;
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -34,6 +35,12 @@ async function bootstrap() {
       new HttpExceptionFilter(),
     ],
   );
+
+  if (mode == 'development')
+    app.enableCors({
+      credentials: true,
+    });
+
   await app.listen(port);
 }
 
